@@ -1,6 +1,7 @@
 import express from "express"; // Importing server dependencies and path for relative use
 import path from "path";
-import morgan from "morgan"; // Watching http request on terminal for dev environment
+// Disable for production:
+// import morgan from "morgan"; // Watching http request on terminal for dev environment
 import loginRoutes from "./routes/login.routes.js"; // Importing login routes from routes directory
 import flash from "connect-flash";
 
@@ -8,8 +9,8 @@ import session from "express-session"; // Importing session dependency for sessi
 import { fileURLToPath } from "url";
 
 // *- Disable in production: for the environment variables usage in the project
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 
 const app = express(); // Initializing express app into a constant
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); // Saving relative path into __dirname
@@ -22,7 +23,8 @@ app.set("view engine", "ejs"); // Setting ejs dependency as the view engine
 // Middlewares
 app.use(express.static(path.join(__dirname, "public"))); // Using the public folder as static path
 app.use(express.urlencoded({ extended: true })); // Extending to true the url encoded for json usage
-app.use(morgan("dev")); // Using morgan to watch requests in dev environment
+// Disable for production:
+// app.use(morgan("dev")); // Using morgan to watch requests in dev environment
 app.use(flash());
 app.use(
   session({ secret: "notgoodsecret", resave: false, saveUninitialized: false })
