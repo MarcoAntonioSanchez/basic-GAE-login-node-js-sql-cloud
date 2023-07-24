@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import flash from "connect-flash";
 import { pool } from "../db.js";
 import { insertUser } from "../db.js";
+import createUnixSocketPool from "../db.js";
 
 // Exporting loadLogin controller for the /login view
 export const loadLogin = (req, res) => {
@@ -67,8 +68,9 @@ export const registerIntent = async (req, res) => {
   try {
     const hash = await bcrypt.hash(password, 12);
 
-    // Llamamos a la función insertUser que está en el archivo de conexión a la base de datos.
-    await insertUser(username, hash);
+    const pool = await createUnixSocketPool();
+    await insertUser(pool, username, hash);
+    await pool.end(); // No olvides cerrar el pool de conexión después de usarlo
 
     res.redirect("/register");
   } catch (err) {

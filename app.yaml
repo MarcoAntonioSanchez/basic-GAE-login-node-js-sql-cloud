@@ -1,1 +1,7 @@
 runtime: nodejs18
+
+env_variables:
+  INSTANCE_CONNECTION_NAME: login-test-393807:us-central1:cloudsql-login-test
+  DB_USER: root
+  DB_PASS: totoserdo58452955
+  DB_NAME: login_test
